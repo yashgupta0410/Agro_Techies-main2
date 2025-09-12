@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- <link rel="stylesheet" href="/stylesheets/sellerProfile.css"> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+<style>
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    .fade-in {
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    .svg-icon {
+        width: 24px;
+        height: 24px;
+        fill: currentColor;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 0.5rem;
+    }
+    .btn_one{
+    color: white;
+    font-size: 30px;
+    font-weight: 700;
+    position: absolute;
+    left: 16px;
+    line-height: 60px;
+    cursor: pointer;
+    transition: all 0.3s linear;
+}
+
+.sidebar_menu{
+    position: fixed;
+    left: -300px;
+    height: 100vh;
+    width: 300px;
+    background-color: #045cac;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.5 );
+    transition: all 0.3s linear;
+}
+
+.sidebar_menu .logo{
+    position: absolute;
+    width: 100%;
+    line-height: 60px;
+    height: 60px;
+    box-shadow: 0 2px 4px white;
+}
+
+.sidebar_menu .logo a{
+    position: absolute;
+    left: 50px;
+    color: white;
+    text-decoration: none;
+    font-size: 28px;
+    font-weight: 500;
+}
+
+.sidebar_menu .btn_two i{
+    color: white;
+    font-size: 25px;
+    line-height: 60px;
+    position: absolute;
+    left: 270px;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.sidebar_menu .menu{
+    position: absolute;
+    width: 100%;
+    top: 80px;
+}
+
+.sidebar_menu .menu li{
+    margin-top: 6px;
+    padding: 14px 20px;
+}
+
+.sidebar_menu .menu a{
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+#check{
+    display: none;
+}
+
+.sidebar_menu .menu li:hover{
+    display: inline-block;
+    box-shadow: 0 0 4px white;
+}
+
+.btn_one i:hover{
+    font-size: 35px;
+}
+
+.btn_two i:hover{
+    font-size: 30px;
+}
+
+.sidebar_menu .social_media i:hover{
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+#check:checked ~ .sidebar_menu {
+    left: 0;
+}
+
+#check:checked ~ .btn_one i{
+    opacity: 0;
+}
+
+#check:checked ~ .sidebar_menu .btn_two i{
+    opacity: 1;
+}
+
+li::marker {
+    color: white;
+  }
+
+.page{
+    display: flex;
+}
+
+</style>
+</head>
+<body class="bg-gray-200">
+    <h1 class="text-6xl  mb-2  text-center bg-gray-900 font-semibold  text-white py-3">Dashboard</h1>
+    <div class="main_box absolute z-40">
+        <input type="checkbox" id="check" />
+        <div class="btn_one -top-20">
+          <label for="check">
+            <i class="fa-solid fa-bars"></i>
+          </label>
+        </div>
+    <div class="sidebar_menu absolute -top-[90px]">
+        <div class="logo">
+          <a href="#">Agro Techies</a>
+        </div>
+  
+        <div class="btn_two">
+          <label for="check" style="color: grey">
+            <i class="fa-solid fa-xmark"></i>
+          </label>
+        </div>
+  
+        <div class="menu">
+          <ul>
+            <li>
+              <a href="/kisaan/dashboard">Dashboard</a>
+            </li>
+            <li>
+              <a href="/kisaan/blog">Blogs</a>
+            </li>
+            <li>
+              <a href="/kisaan/market">Products</a>
+            </li>
+            <li>
+              <a href="/kisaan/profile">Profile</a>
+            </li>
+            <li>
+              <a href="/kisaan/orders">Order History</a>
+            </li>
+            <li>
+              <a href="/kisaan/marketPlace">Market</a>
+            </li>
+            <li>
+              <a href="/kisaan/chatbot">Bot</a>
+            </li>
+            <li>
+              <a href="/kisaan/addcrops">Add Crops</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    <div class="flex h-screen w-full px-10 py-12">
+        <div class="mb-4 w-1/2 flex-col flex justify-between items-center px-8">
+            <h2 class="text-4xl font-semibold mb-4">Weather Information</h2>
+            <div id="weather-info" class="fade-in bg-white p-8 rounded-lg shadow-lg text-center text-zinc-900">
+                <canvas id="weather-chart" class="mb-4"></canvas>
+                <p class="text-lg">City: <span id="city"></span></p>
+                <p class="text-lg">Temperature: <span id="temperature"></span></p>
+                <p class="text-lg">Feels Like: <span id="feels-like"></span></p>
+                <p class="text-lg">Description: <span id="description"></span></p>
+                <p class="text-lg">Humidity: <span id="humidity"></span></p>
+                <p class="text-lg">Wind Speed: <span id="wind-speed"></span></p>
+                <p class="text-lg">Pressure: <span id="pressure"></span></p>
+                <p class="text-lg">Visibility: <span id="visibility"></span></p>
+                <p class="text-lg">Sunrise: <span id="sunrise"></span></p>
+                <p class="text-lg">Sunset: <span id="sunset"></span></p>
+            </div>
+
+        </div>
+
+            <div id="analysis-chart" class="mb-4 w-1/2 flex-col flex justify-between items-center px-8">
+                <h2 class="text-4xl font-semibold mb-4 w-full text-center ">Analysis Chart</h2>
+                <canvas id="analysis-pie-chart" class="h-[45vh]"></canvas>
+            </div>
+            <div class="mb-4 w-1/2 flex-col flex justify-between items-center px-8">
+                <h2 class="text-4xl font-semibold mb-4 w-full text-center ">Selled Crops</h2>
+                <table class="w-full table-auto overflow-y-auto">
+                    <thead>
+                        <tr class="bg-gradient-to-r from-[#F28383] via-[#9D6CD2] to-[#481EDC] text-black">
+                            <th class="border border-gray-300 px-4 py-2">Crop Name</th>
+                            <th class="border border-gray-300 px-4 py-2">Quantity Sold (kg)</th>
+                            <th class="border border-gray-300 px-4 py-2">Price per kg</th>
+                            <th class="border border-gray-300 px-4 py-2">Total Price</th>
+                        </tr>
+                    </thead>
+            <% kisaan.soldCrops.forEach(e=>{ %>    
+                    <tbody>
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-2"><%= e.cropName %></td>
+                            <td class="border border-gray-300 px-4 py-2"><%= e.quantitySold %></td>
+                            <td class="border border-gray-300 px-4 py-2"><%= e.pricePerKg %></td>
+                            <td class="border border-gray-300 px-4 py-2"><%= e.totalPrice %></td>
+                        </tr>
+                    </tbody>
+            <% }) %>
+                </table>
+            </div>
+    </div>
+    <script>
+        async function fetchWeather() {
+            try {
+                const response = await fetch('http://localhost:8000/kisaan/weather');
+                const data = await response.json();
+
+
+                document.getElementById('city').textContent = data.city;
+                document.getElementById('temperature').textContent = `${data.temperature}°C`;
+                document.getElementById('feels-like').textContent = `${data.feelsLike}°C`;
+                document.getElementById('description').textContent = data.description;
+                document.getElementById('humidity').textContent = `${data.humidity}%`;
+                document.getElementById('wind-speed').textContent = `${data.windSpeed} m/s`;
+                document.getElementById('pressure').textContent = `${data.pressure} hPa`;
+                document.getElementById('visibility').textContent = `${data.visibility} meters`;
+                document.getElementById('sunrise').textContent = data.sunrise;
+                document.getElementById('sunset').textContent = data.sunset;
+
+
+                const ctx = document.getElementById('weather-chart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Now', '+1h', '+2h', '+3h', '+4h'], 
+                        datasets: [{
+                            label: 'Temperature (°C)',
+                            data: [data.temperature, data.temperature + 1, data.temperature + 2, data.temperature + 1, data.temperature], // Sample temperature data
+                            borderColor: 'rgb(75, 192, 192)',
+                            tension: 0.1
+                        }]
+                    },
+                    options: {}
+                });
+            } catch (error) {
+                console.error('Error fetching weather data:', error);
+                document.getElementById('weather-info').textContent = 'Error fetching weather data. Please try again later.';
+            }
+        }
+        async function generatePieChart() {
+            try {
+                const response = await fetch('http://localhost:8000/kisaan/soldCrops');
+                const data = await response.json();
+
+                const cropNames = data.map(e => e.cropName);
+                const quantities = data.map(e => e.quantitySold);
+
+                const ctx = document.getElementById('analysis-pie-chart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: cropNames,
+                        datasets: [{
+                            label: 'Quantity Sold (kg)',
+                            data: quantities,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.6)',
+                                'rgba(54, 162, 235, 0.6)',
+                                'rgba(255, 206, 86, 0.6)',
+                                'rgba(75, 192, 192, 0.6)',
+                                'rgba(153, 102, 255, 0.6)',
+                                'rgba(255, 159, 64, 0.6)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {}
+                });
+            } catch (error) {
+                console.error('Error fetching sold crops data:', error);
+            }
+        }
+        window.onload = function() {
+            fetchWeather();
+            generatePieChart();
+        };
+    </script>
+</body>
+</html>

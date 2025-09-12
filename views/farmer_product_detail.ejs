@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-sans">
+
+    <!-- Navigation Bar -->
+    <div id="nav" class="bg-blue-500 p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <div id="logo"><img src="/images/assets/logo.png" alt=""></div>
+            <div id="right" class="space-x-4">
+                <a href="/home" class="text-white">Home</a>
+                <a href="/product" class="text-white">Products</a>
+                <a href="/bot" class="text-white">Bot</a>
+                <a href="/logout" id="logout" class="text-white">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Section -->
+    <div id="container" class="container mx-auto py-8">
+        <div id="upper" class="flex justify-between items-start">
+            <!-- Left Section -->
+            <div id="left" class="flex flex-col items-center my-8">
+                <div id="lup" class="mb-8">
+                    <img src="<%= product.productImage %>" alt="<%= product.title %>" class="w-full h-80 object-cover rounded-md shadow-lg">
+                </div>
+                <div id="ldown">
+                    <a href="/kisaan/place-order/<%= product._id %>" class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600">ORDER NOW</a>
+                </div>
+            </div>
+
+            <!-- Right Section -->
+            <div id="righty" class="flex-1 ml-8 mt-7">
+                <h1 class="text-3xl font-bold mb-4"><%= product.title %></h1>
+                <div id="data" class="flex justify-between mb-8">
+                    <!-- Left Data Section -->
+                    <div id="data-left" class="flex flex-col space-y-4">
+                        <h3 class="text-lg">PRODUCT COMPANY : <%= product.seller.company  %></h3>
+                        <h3 class="text-lg">PRICE : &#8377;<%= product.price  %></h3>
+                        <h3 class="text-lg">TYPE : <%= product.type %></h3>
+                    </div>
+                    <!-- Right Data Section -->
+                    <div id="data-right" class="flex flex-col space-y-4 items-center">
+                        <h2 class="text-lg font-semibold">FEATURES</h2>
+                        <p class="text-base"><%= product.features  %></p>
+                    </div>
+                </div>
+                <h2 class="text-2xl font-semibold mb-4">DESCRIPTION</h2>
+                <p class="text-base mb-8"><%= product.description  %></p>
+            </div>
+        </div>
+
+        <!-- Review Section -->
+        <div id="bottom" class="flex justify-between items-start mb-8">
+            <div id="bleft" class="flex flex-col">
+                <h2 class="text-2xl font-semibold mb-4">REVIEW PRODUCT</h2>
+            </div>
+            <div id="form" class="flex-1 ml-8">
+                <form action="/kisaan/review/<%= product._id %>" method="post" enctype="multipart/form-data">
+                    <label for="reviews" class="text-lg font-semibold mb-2">WRITE YOUR EXPERIENCE :</label>
+                    <textarea name="reviews" id="reviews" rows="7" class="w-full px-4 py-2 border rounded-md mb-4"></textarea>
+                    <label for="reviewImage" class="text-lg font-semibold mb-2">ADD IMAGE :</label>
+                    <input type="file" name="reviewImage" id="reviewImage" class="mb-4">
+                    <input type="submit" value="submit" class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600">
+                </form>
+            </div>
+        </div>
+
+        <!-- Reviews -->
+        <div id="reviews" class="mt-8">
+            <h1 class="text-3xl font-semibold mb-4">CUSTOMER'S REVIEW</h1>
+            <div id="review" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <% review.forEach((e)=>{ %>
+                <div class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 relative">
+                    <div class="relative">
+                        <img src="<%= e.reviewImage %>" alt="Review Image" class="w-24 h-24 object-cover rounded-lg shadow-lg">
+                    </div>
+                    <div class="absolute inset-0 flex items-center justify-center -top-24 left-96">
+                        <img src="<%= e.user.profileImage %>" alt="User Profile Image" class="w-10 h-10 object-cover rounded-full border-2 border-white">
+                    </div>
+                    <div class="flex flex-col flex-1">
+                        <div class="text-lg font-semibold"><%= e.user.username %></div>
+                        <div class="text-sm text-gray-500"><%= e.user.designation %></div>
+                        <h3 class="text-lg font-semibold mb-2"><%= product.title %></h3>
+                        <p class="text-base"><%= e.reviews %></p>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

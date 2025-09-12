@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/stylesheets/officerProfile.css"> 
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+</head>
+<body>
+  <form id="uploadform" hidden action="/officer/officer-p-image-upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="profileImage">
+    <input type="submit" value="submit">
+  </form>
+  <div class="main_box">
+    <input type="checkbox" id="check" />
+    <div class="btn_one">
+      <label for="check">
+        <i class="fa-solid fa-bars"></i>
+      </label>
+    </div>
+
+    <div class="sidebar_menu">
+      <div class="logo">
+        <a href="#">Agro Techies</a>
+      </div>
+
+      <div class="btn_two">
+        <label for="check" style="color: grey">
+          <i class="fa-solid fa-xmark"></i>
+        </label>
+      </div>
+
+      <div class="menu">
+        <ul>
+          <li>
+            <a href="/officer/redeem">Inbox</a>
+          </li>
+          <li>
+            <a href="/officer/addblog">Create Blog</a>
+          </li>
+          <li>
+            <a href="/officer/blogt">Blog Controls</a>
+          </li>
+          <li>
+            <a href="/officer/marketPlace">Marketplace</a>
+          </li>
+          <li>
+            <a href="/officer/addCrops">Add Crop Rates</a>
+          </li>
+          <li>
+            <a href="/logout">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="page">
+    <div class="left">
+        <div class="box">
+            <div class="edit">
+              <a href="" id="uploadicon"><i class="fa-solid fa-pen" id="pen"></i></a>
+            </div>
+            <img src="<%= officer.profileImage %>">
+            <h2><%= officer.fullName %></h2>
+            <h6>@<%= officer.username %></h6>
+            <h6><%= officer.designation %></h6>
+            <h6>Email : <%= officer.email %></h6>
+            <h6>Contact: +91 <%= officer.contact %></h6>
+            <button>Home</button> &nbsp;&nbsp;&nbsp; <button>Logout</button>
+        </div>
+    </div>
+    <div class="right">
+        <div class="details">
+            <div class="info">
+                <h6>Total number of kisaan registered</h6>
+                <br>
+                <h1><%= totalkisaan %></h1>
+                
+            </div>
+            <h2 id="query">Queries</h2>
+            <div class="queries">
+                <div class="element">
+                    <p>
+                        &nbsp; &nbsp; &nbsp; &nbsp; Ayush &nbsp; &nbsp; &nbsp; &nbsp;
+                        <a href="/officer/redeem"><i class="fa-solid fa-circle-chevron-down" id="more"></i></a>
+                    </p>
+                </div>
+                <div class="element">
+                    <p>
+                        &nbsp; &nbsp; &nbsp; &nbsp; Ram Lal &nbsp; &nbsp; &nbsp; &nbsp;
+                        <a href="/officer/redeem"><i class="fa-solid fa-circle-chevron-down" id="more"></i></a>
+                    </p>
+                </div>
+                <div class="element">
+                    <p>
+                        &nbsp; &nbsp; &nbsp; &nbsp; Vidhi &nbsp; &nbsp; &nbsp; &nbsp;
+                        <a href="/officer/redeem"><i class="fa-solid fa-circle-chevron-down" id="more"></i></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <script>
+    document.querySelector('#uploadicon').addEventListener("click", () => {
+      document.querySelector("#uploadform>input").click();
+    })
+    document.querySelector("#uploadform>input").addEventListener("change", () => {
+      document.querySelector("#uploadform").submit();
+    })
+    function dashboard(){
+        window.location.href = `/officer/dashboard`
+    }
+  </script>
+</body>
+</html>

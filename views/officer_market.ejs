@@ -1,0 +1,98 @@
+<!-- officer_market.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Officer Market</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-2xl font-semibold mb-4">Marketplace</h1>
+        <div id="cropList">
+            <% crops.forEach(crop => { %>
+                <div class="bg-white rounded-lg shadow-md p-4 mb-4">
+                    <h2 class="text-lg font-semibold mb-2"><%= crop.cropName %></h2>
+                    <p class="text-gray-600 mb-2">Price: $<span id="price_<%= crop._id %>"><%= crop.price %></span></p>
+                    <div class="flex items-center">
+                        <label for="newPrice_<%= crop._id %>" class="mr-2">New Price:</label>
+                        <input type="number" id="newPrice_<%= crop._id %>" class="border border-gray-300 rounded-md px-2 py-1">
+                        <button onclick="updatePrice('<%= crop._id %>')" class="bg-blue-500 text-white px-4 py-2 rounded-md ml-2">Update</button>
+                        <button onclick="deleteCrop('<%= crop._id %>')" class="bg-red-500 text-white px-4 py-2 rounded-md ml-2">Delete</button>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+    <div id="popup" class="fixed top-0 right-0 m-4 p-4 bg-gray-700 text-white rounded-lg shadow-md hidden">
+        <span onclick="closePopup()" class="float-right cursor-pointer">&times;</span>
+        <p>Crop deleted successfully</p>
+    </div>
+    <div id="upopup" class="fixed top-0 right-0 m-4 p-4 bg-gray-700 text-white rounded-lg shadow-md hidden">
+        <span onclick="closePopup()" class="float-right cursor-pointer">&times;</span>
+        <p>Crop Updated successfully </p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+        async function updatePrice(cropId) {
+            const newPriceInput = document.getElementById(`newPrice_${cropId}`);
+            const newPrice = newPriceInput.value;
+
+            try {
+                const response = await axios.put(`/officer/marketPlace/${cropId}`, { price: newPrice });
+
+                const priceElement = document.getElementById(`price_${cropId}`);
+                priceElement.textContent = newPrice;
+                showupdate()
+
+                newPriceInput.value = '';
+
+            } catch (error) {
+                console.error('Error updating price:', error);
+                alert('Error updating price. Please try again later.');
+            }
+        }
+
+        async function deleteCrop(cropId) {
+            try {
+                const response = await fetch(`/officer/marketPlace/${cropId}`, {
+                    method: 'DELETE'
+                });
+                if (response.ok) {
+                    console.log('Crop deleted successfully');
+                    showAlert();
+                } else {
+                    const errorMessage = await response.text();
+                    console.error('Error deleting crop:', errorMessage);
+                }
+            } catch (error) {
+                console.error('Error deleting crop:', error);
+            }
+        }
+
+        function showAlert() {
+            const popup = document.getElementById('popup');
+            popup.classList.remove('hidden');
+            setTimeout(() => {
+                popup.classList.add('hidden');
+            }, 3000);
+        }
+        function showupdate() {
+            const popup = document.getElementById('upopup');
+            popup.classList.remove('hidden');
+            setTimeout(() => {
+                popup.classList.add('hidden');
+            }, 3000);
+        }
+
+        function closePopup() {
+            const popup = document.getElementById('popup');
+            popup.classList.add('hidden');
+        }
+    </script>
+</body>
+</html>

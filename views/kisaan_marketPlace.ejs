@@ -1,0 +1,46 @@
+<!-- kisaan_marketPlace.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kisaan Marketplace</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-2xl font-semibold mb-4">Kisaan Marketplace</h1>
+        <div id="cropList">
+            <% crops.forEach(crop => { %>
+                <div class="bg-white rounded-lg shadow-md p-4 mb-4">
+                    <h2 class="text-lg font-semibold mb-2"><%= crop.cropName %></h2>
+                    <p class="text-gray-600 mb-2">Price: $<%= crop.price %> per kg</p>
+                    <div class="flex items-center mb-2">
+                        <label for="quantity_<%= crop._id %>" class="mr-2">Quantity (kg):</label>
+                        <input type="number" id="quantity_<%= crop._id %>" class="border border-gray-300 rounded-md px-2 py-1">
+                    </div>
+                    <button onclick="sellCrop('<%= crop.cropName %>', '<%= crop._id %>')" class="bg-green-500 text-white px-4 py-2 rounded-md">Sell</button>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+        async function sellCrop(cropName, cropId) {
+            const quantityInput = document.getElementById(`quantity_${cropId}`);
+            const quantity = quantityInput.value;
+
+            try {
+                const response = await axios.post(`/kisaan/marketPlace/${cropName}`, {quantity: quantity});            
+                alert('Crop sold successfully');
+            } catch (error) {
+                console.error('Error selling crop:', error);
+                alert('Error selling crop. Please try again later.');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbot Demo</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="h-screen w-full relative">
+  <div id="nav" class="bg-blue-500 py-4 absolute w-full">
+    <div class="container mx-auto">
+        <nav class="flex justify-end">
+            <a href="/kisaan/profile" class="text-white hover:text-gray-200 mr-4">Profile</a>
+            <a href="/kisaan/marketPlace" class="text-white hover:text-gray-200 mr-4">Market Place</a>
+            <a href="/kisaan/inventory" class="text-white hover:text-gray-200">Inventory</a>
+        </nav>
+    </div>
+</div>
+<div class="bg-gray-100 h-screen flex flex-col justify-center items-center">
+
+  <h1 class="text-3xl font-bold mb-8">Kisaan's Chatbot</h1>
+  <div id="chat-container" class="max-w-md w-full bg-white rounded-lg shadow-lg p-4 mb-8"></div>
+  <div class="flex w-full max-w-md">
+    <input type="text" id="message-input" class="flex-1 appearance-none rounded-l-lg py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-sm focus:outline-none">
+    <button id="send-button" class="rounded-r-lg px-4 bg-blue-500 text-white font-semibold shadow-sm text-sm">Send</button>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const chatContainer = document.getElementById('chat-container');
+      const messageInput = document.getElementById('message-input');
+      const sendButton = document.getElementById('send-button');
+
+      sendButton.addEventListener('click', async () => {
+        const message = messageInput.value.trim();
+        if (message) {
+          try {
+            const response = await fetch('/chat', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ message })
+            });
+            if (!response.ok) {
+              throw new Error('Failed to fetch response');
+            }
+            const data = await response.json();
+            const answer = data.answer;
+            chatContainer.innerHTML += `<div class="mb-2"><strong class="text-blue-500"><%= kisaan.username %>:</strong> ${message}</div>`;
+            chatContainer.innerHTML += `<div class="mb-2"><strong class="text-green-500">Bot:</strong> ${answer}</div>`;
+            messageInput.value = '';
+          } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to fetch response');
+          }
+        }
+      });
+    });
+  </script>
+</div>
+</body>
+</html>

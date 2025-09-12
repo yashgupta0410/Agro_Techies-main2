@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulk Insert Crop Prices</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen p-10">
+    <div class="bg-white p-8 rounded-lg shadow-md">
+        <h1 class="text-2xl font-bold mb-6">Bulk Insert Crop Prices</h1>
+        <form id="cropPriceForm" action="/officer/marketPlace" method="post" >
+            <div id="cropInputs">
+                <div class="cropInput mb-4">
+                    <label for="cropName" class="block mb-2">Crop Name:</label>
+                    <input type="text" name="cropName[]" required class="w-full border border-gray-300 rounded-md px-4 py-2">
+                </div>
+                <div class="cropInput mb-4">
+                    <label for="price" class="block mb-2">Price:</label>
+                    <input type="number" name="price[]" required class="w-full border border-gray-300 rounded-md px-4 py-2">
+                </div>
+            </div>
+            <button type="button" id="addCrop" class="bg-blue-500 text-white px-4 py-2 rounded-md mr-2">Add More</button>
+            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-md">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('addCrop').addEventListener('click', function() {
+            var cropInputs = document.getElementById('cropInputs');
+            var newCropInput = document.createElement('div');
+            newCropInput.classList.add('cropInput', 'mb-4');
+            newCropInput.innerHTML = `
+                <label for="cropName" class="block mb-2">Crop Name:</label>
+                <input type="text" name="cropName[]" required class="w-full border border-gray-300 rounded-md px-4 py-2">
+                <label for="price" class="block mb-2">Price:</label>
+                <input type="number" name="price[]" required class="w-full border border-gray-300 rounded-md px-4 py-2">
+            `;
+            cropInputs.appendChild(newCropInput);
+        });
+    </script>
+</body>
+</html>

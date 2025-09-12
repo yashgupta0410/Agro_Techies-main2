@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/stylesheets/kisaanProfile.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+
+<body>
+  <form id="uploadform" hidden action="/kisaan/kisaan-p-image-upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="image">
+  </form>
+  <div class="main_box">
+    <input type="checkbox" id="check" />
+    <div class="btn_one">
+      <label for="check">
+        <i class="fa-solid fa-bars"></i>
+      </label>
+    </div>
+
+    <div class="sidebar_menu">
+      <div class="logo">
+        <a href="#">Agro Techies</a>
+      </div>
+
+      <div class="btn_two">
+        <label for="check" style="color: grey">
+          <i class="fa-solid fa-xmark"></i>
+        </label>
+      </div>
+
+      <div class="menu">
+        <ul>
+          <li>
+            <a href="/kisaan/dashboard">Dashboard</a>
+          </li>
+          <li>
+            <a href="/kisaan/blog">Blogs</a>
+          </li>
+          <li>
+            <a href="/kisaan/market">Products</a>
+          </li>
+
+          <li>
+            <a href="/kisaan/orders">Order History</a>
+          </li>
+          <li>
+            <a href="/kisaan/marketPlace">Market</a>
+          </li>
+          <li>
+            <a href="/kisaan/chatbot">Bot</a>
+          </li>
+          <li>
+            <a href="/kisaan/addcrops">Add Crops</a>
+          </li>
+          <li>
+            <a href="/kisaan/logout">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="page">
+    <div class="left">
+      <div class="box">
+        <div class="edit">
+          <a id="uploadicon" href="#"><i class="fa-solid fa-pen" id="pen"></i></a>
+        </div>
+        <img src="<%= kisaan.profileImage %>">
+        <h2>
+          <%= kisaan.fullName %>
+        </h2>
+        <h6>@<%= kisaan.username %>
+        </h6>
+        <h6>Contact: <%= kisaan.contact %>
+        </h6>
+        <h6>State: <%= kisaan.state %>
+        </h6>
+        <button>Home</button> &nbsp;&nbsp;&nbsp; <button onclick="logout()">Logout</button>
+      </div>
+      <div class="cards">
+        <div class="card inventory">
+          <img src="/images/inventory.jpg" onclick="inventory()">
+          <h2>Inventory</h2>
+        </div>
+        <div class="card history">
+          <img src="/images/history.jpg" onclick="history()">
+          <h2>Orders</h2>
+        </div>
+        <div class="card dashboard">
+          <img src="/images/dash.png" onclick="dashboard()">
+          <h2>Dashboard</h2>
+        </div>
+      </div>
+    </div>
+    <div class="right">
+      <div class="balance">
+        <h2>Balance: &#x20b9 <%= kisaan.balance %>
+        </h2>
+      </div>
+      <div class="form">
+        <form action="/kisaan/redeem" method="post">
+          <input type="text" name="accountNumber" class="details" placeholder="Account Number">
+          <input type="text" name="ifsc" class="details" placeholder="IFSC Code">
+          <input type="text" name="account" class="details" placeholder="Account Holdername">
+          <br>
+          <button type="submit" class="redeem">Redeem</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.querySelector('#uploadicon').addEventListener("click", () => {
+      document.querySelector("#uploadform>input").click();
+    })
+    document.querySelector("#uploadform>input").addEventListener("change", () => {
+      document.querySelector("#uploadform").submit();
+    })
+    function inventory(){
+        window.location.href = `/kisaan/inventory`
+    }
+    function history(){
+        window.location.href = `/kisaan/orders`
+    }
+    function dashboard(){
+        window.location.href = `/kisaan/dashboard`
+    }
+    function logout(){
+      window.location.href = `/kisaan/logout`
+    }
+  </script>
+
+</body>
+
+</html>

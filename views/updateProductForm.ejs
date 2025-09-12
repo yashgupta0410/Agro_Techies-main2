@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-800 h-screen flex justify-center items-center">
+
+<div class="bg-zinc-800 p-8 rounded-lg border-2 border-zinc-300 max-w-lg w-full">
+    <h1 class="text-2xl text-white mb-4 text-center">Edit Product</h1>
+    <hr class="opacity-10 mt-3">
+    <form action="/seller/updateProduct/<%= product._id %>" method="post" class="mt-4">
+        <input type="text" name="productName" class="block w-full px-3 py-2 mt-2 text-black rounded-lg bg-gray-200 focus:outline-none" placeholder="Product Name">
+        <input type="number" name="price" class="block w-full px-3 py-2 mt-2 text-black rounded-lg bg-gray-200 focus:outline-none" placeholder="Price in Rs">
+        <input type="text" name="features" class="block w-full px-3 py-2 mt-2 text-black rounded-lg bg-gray-200 focus:outline-none" placeholder="Features">
+        <textarea name="description" class="block w-full px-3 py-2 mt-2 h-40 text-black rounded-lg bg-gray-200 focus:outline-none resize-none" placeholder="Description"></textarea>
+        <input type="submit" value="Edit Product" class="block w-full px-3 py-2 mt-4 text-white bg-red-700 rounded-full hover:bg-red-600 cursor-pointer">
+    </form>
+    <a href="/seller/profile" class="block w-full mt-4 px-3 py-2 text-black text-xl bg-pink-300 rounded-full text-center hover:bg-pink-400 cursor-pointer">Profile</a>
+</div>
+
+</body>
+</html>

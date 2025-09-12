@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css" rel="stylesheet"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="/stylesheets/order.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div id="main" class="container mx-auto mt-8">
+        <h1 class="text-5xl font-bold text-center text-black mb-8">Order Details</h1>
+        <div id="products" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <% kisaan.orders.forEach((e)=>{ %>
+                <div class="bg-white shadow-md rounded-md p-6">
+                    <img src="<%= e.productImage %>" alt="Product Image" class="w-full h-48 object-cover rounded-md mb-4">
+                    <div class="text-center mb-4">
+                        <h3 class="text-xl text-black font-semibold mb-2">Customer: <%= e.username %></h3>
+                        <p class="text-gray-700 mb-2">Product: <%= e.productName %></p>
+                        <p class="text-gray-700 mb-2">Price: &#8377; <%= e.price %></p>
+                        <p class="text-gray-700 mb-2">Payment: <%= e.mode %></p>
+                        <p class="text-gray-700 mb-2">Address: <%= e.address %></p>
+                        <p class="text-gray-700 mb-2">Contact: <%= e.contact %></p>
+                        <p class="text-gray-700 mb-2">Status: <%= e.status %></p>
+                    </div>
+                    <div class="flex justify-center">
+                        <a href="/kisaan/product/<%= e.product %>" class="text-blue-500 hover:text-blue-700">
+                            <i class="ri-arrow-right-circle-line text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+    <script src="/javascripts/cart.js"></script>
+</body>
+</html>

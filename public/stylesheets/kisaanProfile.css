@@ -1,0 +1,255 @@
+body{
+    background-image: url("/images/back.jpg");
+    height: 100%;
+    width: 99vw;
+    background-size: cover;
+}
+
+.page{
+    display: flex;
+    justify-content: space-between;
+}
+
+.box{
+    background-color: white;
+    text-align: center;
+    display: inline-block;
+    width: 45vw;
+    margin-top: 20px;
+    margin-left: 155px;
+    border-radius: 15px;
+    color: #0454ac;
+}
+
+.box img {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    margin: 0px;
+    margin-top: 35px;
+}
+
+.edit{
+    background-color: #0580d4;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    position: absolute;
+    margin-left: 380px;
+    margin-top: 150px;
+}
+
+#pen{
+    color: white;
+    margin-top: 12px;
+}
+
+.box h2{
+    font-size: 30px;
+    margin: 10px;
+}
+
+.box h6{
+    font-size: 15px;
+    margin: 10px;
+}
+
+.box button{
+    margin-bottom: 20px;
+    font-size: 1.2vw;
+    width: 8vw;
+    height: 2.5vw;
+    border-radius: 25px;
+}
+
+button{
+    background-color: #0454ac;
+    color: white;
+    border: none;
+}
+
+.card{
+    background-color: white;
+    width: 15vw;
+    height: 16.5vw;
+    text-align: center;
+    border-radius: 15px;
+    transition: 0.5s;
+}
+
+.card:hover{
+    box-shadow: 16px 16px 16px black;
+}
+
+.card img{
+    margin-top: 1.5vw;
+    height: 10vw;
+    width: 10vw;
+    margin-bottom: 0px;
+    border-radius: 15px;
+}
+
+.card h2{
+    color: #0454ac;
+}
+
+.cards{
+    display: flex;
+    width: 65vw;
+    justify-content: space-evenly;
+    margin-top: 45px;
+}
+
+.right{
+    width: 30vw;
+    height: 70vh;
+    margin-top: 7vw;
+    background-color: white;
+    margin-right: 55px;
+    text-align: center;
+    border-radius: 15px;
+}
+
+.balance{
+    width: 27vw;
+    height: 5vw;
+    background-color: #045cac;
+    margin: auto;
+    margin-top: 25px;
+    border-radius: 15px;
+    color: white;
+}
+
+.balance h2{
+    font-size: 2vw;
+    margin-top: auto;
+    padding-top: 18px;
+}
+
+.form{
+    width: 20vw;
+    height: 18vw;
+    /* background-color: cornsilk; */
+    margin: auto;
+    padding: 45px;
+    margin-top: 15px;
+}
+
+input{
+    width: 20vw;
+    height: 3vw;
+    margin-bottom: 2vw;
+    border-radius: 25px;
+    text-align: center;
+    border: 3px solid #045cac;
+}
+
+.redeem{
+    font-size: 1.5vw;
+    width: 9vw;
+    height: 3vw;
+    border-radius: 25px;
+}
+
+.btn_one{
+    color: white;
+    font-size: 30px;
+    font-weight: 700;
+    position: absolute;
+    left: 16px;
+    line-height: 60px;
+    cursor: pointer;
+    transition: all 0.3s linear;
+}
+
+.sidebar_menu{
+    position: fixed;
+    left: -300px;
+    height: 100vh;
+    width: 300px;
+    background-color: #045cac;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.5 );
+    transition: all 0.3s linear;
+}
+
+.sidebar_menu .logo{
+    position: absolute;
+    width: 100%;
+    line-height: 60px;
+    height: 60px;
+    box-shadow: 0 2px 4px white;
+}
+
+.sidebar_menu .logo a{
+    position: absolute;
+    left: 50px;
+    color: white;
+    text-decoration: none;
+    font-size: 28px;
+    font-weight: 500;
+}
+
+.sidebar_menu .btn_two i{
+    color: white;
+    font-size: 25px;
+    line-height: 60px;
+    position: absolute;
+    left: 270px;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.sidebar_menu .menu{
+    position: absolute;
+    width: 100%;
+    top: 80px;
+}
+
+.sidebar_menu .menu li{
+    margin-top: 6px;
+    padding: 14px 20px;
+}
+
+.sidebar_menu .menu a{
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+#check{
+    display: none;
+}
+
+.sidebar_menu .menu li:hover{
+    display: inline-block;
+    box-shadow: 0 0 4px white;
+}
+
+.btn_one i:hover{
+    font-size: 35px;
+}
+
+.btn_two i:hover{
+    font-size: 30px;
+}
+
+.sidebar_menu .social_media i:hover{
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+#check:checked ~ .sidebar_menu {
+    left: 0;
+}
+
+#check:checked ~ .btn_one i{
+    opacity: 0;
+}
+
+#check:checked ~ .sidebar_menu .btn_two i{
+    opacity: 1;
+}
+
+li::marker {
+    color: white;
+  }

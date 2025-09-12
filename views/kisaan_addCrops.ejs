@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Crops</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            gap: 17vh;
+        }
+        #heading>h1{
+            font-size: 2vw;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .pair {
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+
+        .pair label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .pair select,
+        .pair input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 7px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .buttons button:hover {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+        #notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border-radius: 4px;
+            display: none;
+        }
+
+        #closeBtn {
+            cursor: pointer;
+            float: right;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div id="heading">
+            <h1>Add Crops To Inventory</h1>
+        </div>
+    </header>
+    <div class="container">
+        <h2>Add Crops</h2>
+        <form action="/kisaan/addCrops" method="POST" id="cropForm">
+            <div id="formContainer">
+                <div class="pair">
+                    <label for="crop">Select Crop:</label>
+                    <select name="crop[]" class="crop-select" required onchange="updatePair(this)">
+                        <option value="">Select Crop</option>
+                        <option value="rice">Rice</option>
+                        <option value="wheat">Wheat</option>
+                        <option value="maize">Maize</option>
+                    </select>
+                    <label for="quantity">Quantity:</label>
+                    <input type="number" name="riceQty" class="crop-quantity" required>
+                </div>
+            </div>
+            <div class="buttons">
+                <button type="button" id="addCrop">Add More</button>
+                <button type="submit">Add Crops</button>
+            </div>
+        </form>
+    </div>
+    <div id="notification">
+        <span id="closeBtn" onclick="closeNotification()">✖</span>
+        Inventory updated successfully!
+    </div>
+
+    <script>
+        document.getElementById('addCrop').addEventListener('click', function() {
+            var formContainer = document.getElementById('formContainer');
+            var newField = document.createElement('div');
+            newField.classList.add('pair');
+            newField.innerHTML = `
+                <label for="crop">Select Crop:</label>
+                <select name="crop[]" class="crop-select" required onchange="updatePair(this)">
+                    <option value="">Select Crop</option>
+                    <option value="rice">Rice</option>
+                    <option value="wheat">Wheat</option>
+                    <option value="maize">Maize</option>
+                </select>
+                <label for="quantity">Quantity:</label>
+                <input type="number" name="riceQty" class="crop-quantity" required>
+            `;
+            formContainer.appendChild(newField);
+        });
+
+        function updatePair(select) {
+            var selectedCrop = select.value;
+            var targetInput = select.parentElement.querySelector('.crop-quantity');
+            targetInput.name = selectedCrop;
+        }
+        function showNotification() {
+            var notification = document.getElementById('notification');
+            notification.style.display = 'block';
+            setTimeout(function() {
+                notification.style.display = 'none';
+            }, 3000); 
+        }
+        function closeNotification() {
+            var notification = document.getElementById('notification');
+            notification.style.display = 'none';
+        }
+        document.getElementById('cropForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            this.submit();
+            showNotification();
+        });
+    </script>
+</body>
+</html>

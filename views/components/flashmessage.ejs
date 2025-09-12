@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash Messages</title>
+    <style>
+        .flash-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            animation: fadeOut 4s forwards;
+            opacity: 1;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Flash Messages Example</h1>
+    </header>
+
+    <div id="flashMessageContainer"></div>
+
+    <script>
+        function showFlashMessage(message) {
+            const flashMessageContainer = document.getElementById('flashMessageContainer');
+
+            const flashMessage = document.createElement('div');
+            flashMessage.classList.add('flash-message');
+            flashMessage.textContent = message;
+
+            flashMessageContainer.appendChild(flashMessage);
+        }
+
+        window.onload = function() {
+
+            const messageFromBackend = "This is a flash message!";
+            showFlashMessage(messageFromBackend);
+
+            setTimeout(() => {
+                const flashMessage = document.querySelector('.flash-message');
+                if (flashMessage) {
+                    flashMessage.remove();
+                }
+            }, 4000);
+        };
+    </script>
+</body>
+</html>

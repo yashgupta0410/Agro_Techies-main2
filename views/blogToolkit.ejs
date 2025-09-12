@@ -1,0 +1,88 @@
+<!-- views/blog.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <header class="bg-blue-500 text-white py-4">
+        <div class="container mx-auto px-4">
+            <h1 class="text-2xl font-bold">Blogs</h1>
+        </div>
+    </header>
+
+    <div id="flashMessage" class="fixed top-0 right-0 mt-4 mr-4 bg-green-500 text-white px-4 py-2 rounded shadow hidden">
+
+    </div>
+
+    <main class="container mx-auto px-4 py-8" id="blogContainer">
+
+        <% blogs.forEach(blog => { %>
+            <div class="bg-white shadow-lg rounded-lg overflow-hidden mb-8 blog-card">
+                <img src="<%= blog.image %>" alt="Blog Image" class="w-full h-64 object-cover">
+                <div class="px-6 py-4">
+                    <h2 class="font-bold text-xl mb-2"><%= blog.heading %></h2>
+                    <p class="text-gray-700 text-base"><%= blog.content %></p>
+                </div>
+                <div class="px-6 py-4">
+                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded deleteBtn" data-blog-id="<%= blog._id %>">Delete</button>
+                </div>
+            </div>
+        <% }); %>
+    </main>
+
+    <footer class="bg-gray-900 text-white py-4">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2024 All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+
+        function showFlashMessage(message, isSuccess) {
+            const flashMessage = document.getElementById('flashMessage');
+            flashMessage.textContent = message;
+            flashMessage.classList.remove('bg-green-500', 'bg-red-500');
+            flashMessage.classList.add(isSuccess ? 'bg-green-500' : 'bg-red-500');
+            flashMessage.classList.remove('hidden');
+            setTimeout(() => {
+                flashMessage.classList.add('hidden');
+            }, 4000);
+        }
+
+        async function handleDelete(blogId, cardElement) {
+            try {
+                const response = await fetch(`/officer/blog/${blogId}`, {
+                    method: 'DELETE'
+                });
+                if (response.ok) {
+                    cardElement.remove();
+                    showFlashMessage('Blog post deleted successfully', true);
+                } else {
+                    console.error('Error deleting blog post:', response.statusText);
+                    showFlashMessage('Failed to delete blog post', false);
+                }
+            } catch (error) {
+                console.error('Error deleting blog post:', error);
+               
+                showFlashMessage('Failed to delete blog post', false);
+            }
+        }
+
+        
+        document.addEventListener('click', async (event) => {
+            if (event.target.classList.contains('deleteBtn')) {
+                const blogId = event.target.dataset.blogId;
+                const cardElement = event.target.closest('.blog-card');
+                if (blogId && cardElement) {
+                    await handleDelete(blogId, cardElement);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

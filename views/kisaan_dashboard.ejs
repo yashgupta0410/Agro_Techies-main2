@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balance Chart</title>
+</head>
+<body>
+    <header>
+        <h1>Balance Chart</h1>
+    </header>
+
+    <main>
+        <section id="balanceChartSection">
+            <!-- Chart will be displayed here -->
+        </section>
+    </main>
+
+    <script>
+        async function fetchBalanceChart() {
+            try {
+                const response = await fetch('/balance-chart');
+                const chartImage = await response.blob(); 
+                const imageUrl = URL.createObjectURL(chartImage); 
+
+                const imgElement = document.createElement('img');
+                imgElement.src = imageUrl;
+
+                const balanceChartSection = document.getElementById('balanceChartSection');
+                balanceChartSection.appendChild(imgElement);
+            } catch (error) {
+                console.error('Error fetching balance chart:', error);
+            }
+        }
+
+        window.onload = fetchBalanceChart;
+    </script>
+</body>
+</html>

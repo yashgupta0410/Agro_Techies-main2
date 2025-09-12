@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css" rel="stylesheet"/>
+
+
+</head>
+<body class="bg-gray-100 font-sans">
+
+    <div id="main" class="flex flex-col min-h-screen">
+
+        <div id="nav" class="bg-blue-500 py-4">
+            <div class="container mx-auto">
+                <nav class="flex justify-end">
+                    <a href="/kisaan/profile" class="text-white hover:text-gray-200 mr-4">Profile</a>
+                    <a href="/kisaan/marketPlace" class="text-white hover:text-gray-200 mr-4">Market Place</a>
+                    <a href="/kisaan/inventory" class="text-white hover:text-gray-200">Inventory</a>
+                </nav>
+            </div>
+        </div>
+        
+        <div id="page1" class="container mx-auto py-8">
+ 
+            <div id="search" class="mb-8">
+                <form action="" class="flex items-center justify-between">
+                    <input type="search" name="filter" id="filter" placeholder="Search items here" class="w-full px-4 py-2 border rounded-md mr-4">
+                    <label for="filter-type" class="mr-4">Filter by:</label>
+                    <select id="filter-type" class="px-4 py-2 border rounded-md mr-4">
+                        <option value="title">Product</option>
+                        <option value="price">Price</option>
+                        <option value="brand">Brand</option>
+                    </select>
+                    <button id="voicebtn" type="button" class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900"><i class="ri-mic-line"></i></button>
+                </form>
+            </div>
+
+            <div id="products" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <% products.forEach((e) => { %>
+                    <div class="product bg-white rounded-lg shadow-md flex">
+                        <div class="image w-1/3 flex items-center justify-center">
+                            <img src="<%= e.productImage %>" alt="<%= e.productName %>" class="w-full h-auto object-cover rounded-l-lg">
+                        </div>
+                        <div class="data flex flex-col justify-between p-4 w-2/3">
+                            <div>
+                                <h2 class="title text-xl font-semibold"><%= e.productName %></h2>
+                                <h3 class="price text-lg font-semibold">&#8377; <%= e.price %></h3>
+                                <h3 class="brand text-lg"><%= e.company %></h3>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div id="icons">
+                                    <a href="#" class="add-to-cart flex items-center text-blue-500 hover:text-blue-700" data-productid="<%= e._id %>">
+                                        <i class="ri-shopping-cart-fill mr-2"></i> Add to cart
+                                    </a>
+                                    <a href="#" class="remove-from-cart flex items-center text-red-500 hover:text-red-700" data-productid="<%= e._id %>">
+                                        <i class="ri-close-circle-fill mr-2"></i> Remove from cart
+                                    </a>
+                                    <a href="whatsapp://send?text=Check out this product: <%= e.productName %> for only &#8377;<%= e.price %> - <%= e.shareableLink %>" class="share-product flex items-center text-green-500 hover:text-green-700" target="_blank">
+                                        <i class="ri-share-fill mr-2"></i> Share
+                                    </a>
+                                </div>
+                                <div class="seemore">
+                                    <a href="/kisaan/product/<%= e._id %>" class="text-blue-500 hover:text-blue-700">
+                                        <i class="ri-arrow-right-circle-line"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                <% }) %>
+            </div>
+            
+        </div>
+    </div>
+
+    <script src="/javascripts/product.js"></script>
+    <script>
+      const voiceSearchButton = document.getElementById('voicebtn');
+      const searchInput = document.getElementById('filter');
+  
+      if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+          const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+          recognition.continuous = false;
+          recognition.lang = 'en-US';
+  
+          recognition.onresult = function(event) {
+              console.log(event)
+              let transcript = '';
+              for (let i = 0; i < event.results.length; i++) {
+                  transcript += event.results[i][0].transcript;
+
+              }
+              transcript = transcript.slice(0, -1);
+              searchInput.value = transcript; 
+          };
+  
+          recognition.onerror = function(event) {
+              console.error('Speech recognition error:', event.error);
+          };
+  
+          voiceSearchButton.addEventListener('click', function() {
+              recognition.start();
+          });
+      } else {
+          console.error('Speech recognition not supported in this browser.');
+      }
+  </script>
+    
+</body>
+</html>
+
+

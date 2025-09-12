@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css" rel="stylesheet"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="main">
+        <div id="nav" class="bg-blue-500 py-4">
+            <div class="container mx-auto">
+                <nav class="flex justify-end">
+                    <a href="/seller/profile" class="text-white hover:text-gray-200 mr-4">Profile</a>
+                    <a href="/seller/addproduct" class="text-white hover:text-gray-200">Add Product</a>
+                </nav>
+            </div>
+        </div>
+        <div id="page1" class="container mx-auto mt-8">
+            <div id="products">
+                <% seller.orders.forEach((e)=>{ %>
+                <div class="sproduct bg-white shadow-md rounded-md p-6 mb-6">
+                    <div class="simage">
+                        <img src="<%= e.productImage %>" alt="Product Image" class="w-full h-48 object-cover rounded-md mb-4">
+                    </div>
+                    <div class="sdata">
+                        <h3 class="text-xl font-semibold mb-2">Customer: <%= e.username %></h3>
+                        <p class="text-gray-700 mb-2">Product: <%= e.productName %></p>
+                        <p class="text-gray-700 mb-2">Price: &#8377; <%=e.price %></p>
+                        <p class="text-gray-700 mb-2">Payment: <%=e.mode %></p>
+                        <p class="text-gray-700 mb-2">Address: <%= e.address %></p>
+                        <p class="text-gray-700 mb-2">Contact: <%=e.contact %></p>
+                        <p class="text-gray-700 mb-2">Status: <%=e.status %></p>
+                        <div class="flex items-center mt-4">
+                            <form action="/seller/status/<%= e._id %>" method="post" class="flex items-center">
+                                <select name="status" id="status" class="border border-gray-300 rounded-md px-2 py-1 mr-2">
+                                    <option value="ordered">Ordered</option>
+                                    <option value="processing">Processing</option>
+                                    <option value="shipped">Shipped</option>
+                                    <option value="delivered">Delivered</option>
+                                    <option value="cancelled">Cancelled</option>       
+                                </select>
+                                <input type="submit" value="Submit" class="bg-blue-500 text-white px-4 py-1 rounded-md cursor-pointer hover:bg-blue-600">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+
+    <script src="/javascripts/cart.js"></script>   
+</body>
+</html>
+
