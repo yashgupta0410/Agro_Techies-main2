@@ -10,9 +10,9 @@ const addProduct =  async (req, res) => {
         const username = req.user.username;
         const imagePath = req.file.path;
         console.log(imagePath)
-        const cloudinaryResponse = await uploadOnCloudinary(imagePath);
-        console.log(cloudinaryResponse)
-        const url = cloudinaryResponse.url; 
+        // const cloudinaryResponse = await uploadOnCloudinary(imagePath);
+        // console.log(cloudinaryResponse)
+        // const url = cloudinaryResponse.url; 
         const seller = await Seller.findOne({ username });
         if (!seller) throw new Error('Seller not found');
         const product = await Product.create({
@@ -23,7 +23,7 @@ const addProduct =  async (req, res) => {
             price,
             type,
             company,
-            productImage: url
+            productImage: "url"
         });
         await product.save();
         seller.products.push(product._id);

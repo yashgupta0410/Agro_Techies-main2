@@ -22,6 +22,7 @@ const productSchema = new Schema({
     },
     productImage:{
         type:String,
+        required:false
     },
     comapany:{
         type:String,
